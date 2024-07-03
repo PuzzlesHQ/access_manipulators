@@ -1,0 +1,82 @@
+package dev.crmodders.puzzle.access_manipulators;
+
+import dev.crmodders.puzzle.access_manipulators.pairs.FieldModifierPair;
+import dev.crmodders.puzzle.access_manipulators.pairs.MethodModifierPair;
+import dev.crmodders.puzzle.access_manipulators.readers.AccessManipulatorReader;
+import dev.crmodders.puzzle.access_manipulators.readers.AccessTransformerReader;
+import dev.crmodders.puzzle.access_manipulators.readers.AccessWidenerReader;
+import dev.crmodders.puzzle.access_manipulators.readers.api.IAccessModifierReader;
+import dev.crmodders.puzzle.access_manipulators.transformers.AccessManipulatorClassWriter;
+import dev.crmodders.puzzle.access_manipulators.transformers.ClassModifier;
+import dev.crmodders.puzzle.access_manipulators.util.ClassPathUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
+
+public class AccessManipulators {
+
+    public static List<String> affectedClasses = new ArrayList<>();
+
+    public static Map<String, ClassModifier> classesToModify = new HashMap<>();
+    public static Map<String, Map<String, FieldModifierPair>> fieldsToModify = new HashMap<>();
+    public static Map<String, List<MethodModifierPair>> methodsToModify = new HashMap<>();
+
+    // FileExtension: Reader
+    public static Map<String, IAccessModifierReader> readerMap = new HashMap<>();
+
+    static {
+        registerReader(".accesswidener", AccessWidenerReader.class);
+        registerReader(".cfg", AccessTransformerReader.class);
+        registerReader(".manipulator", AccessManipulatorReader.class);
+    }
+
+    public static void registerReader(String extension, Class<? extends IAccessModifierReader> reader) {
+        try {
+            readerMap.put(extension.replaceAll("\\.", ""), reader.newInstance());
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void registerModifierFile(String path) {
+        String fileExt = path.split("\\.")[path.split("\\.").length - 1].toLowerCase();
+        IAccessModifierReader reader = readerMap.get(fileExt);
+        if (reader == null)
+            throw new RuntimeException("Unsupported Access Modifier Extension \"."+fileExt+"\"");
+
+        AtomicReference<InputStream> stream = new AtomicReference<>(AccessTransformerReader.class.getClassLoader().getResourceAsStream(path));
+        if (stream.get() != null) {
+            try {
+                reader.read(new String(stream.get().readAllBytes()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return;
+        }
+
+        ClassPathUtil.iterateThroughClasspath(ClassPathUtil.getUrlsOnClasspath(), zipFile -> {
+            try {
+                stream.set(zipFile.getInputStream(zipFile.getEntry(path)));
+                reader.read(new String(stream.get().readAllBytes()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public static byte[] transformClass(String name, byte[] bytes) {
+        name = name.replaceAll("\\.", "/");
+        if (classesToModify.containsKey(name) || fieldsToModify.containsKey(name) || methodsToModify.containsKey(name)) {
+            System.out.println("Manipulated Class " + name);
+            AccessManipulatorClassWriter writer = new AccessManipulatorClassWriter(name, bytes);
+            return writer.applyManipulations();
+        }
+        return bytes;
+    }
+
+}

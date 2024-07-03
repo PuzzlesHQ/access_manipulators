@@ -1,0 +1,55 @@
+plugins {
+    id("maven-publish")
+    id("java")
+    id("java-library")
+}
+
+group = "dev.crmodders"
+
+repositories {
+    mavenCentral()
+
+    maven { url "https://jitpack.io" }
+    maven { url "https://maven.google.com/" }
+    maven { url "https://maven.crmodders.dev/releases" }
+    maven { url "https://maven.crmodders.dev/snapshots" }
+    maven { url "https://repo.spongepowered.org/repository/maven-public/" }
+}
+
+dependencies {
+    // Asm
+    compileOnly("org.ow2.asm:asm:$asmVersion")
+    compileOnly("org.ow2.asm:asm-tree:$asmVersion")
+    compileOnly("org.ow2.asm:asm-util:$asmVersion")
+    compileOnly("org.ow2.asm:asm-analysis:$asmVersion")
+    compileOnly("org.ow2.asm:asm-commons:$asmVersion")
+}
+
+tasks.register("fullJar", Jar) {
+    archiveFileName = "AccessManipulators-" + version + ".jar"
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "crmReleases"
+            url = "https://maven.crmodders.dev/releases"
+            credentials{
+                username = System.getenv("CRMReleasesUsername")
+                password = System.getenv("CRMReleasesPassword")
+            }
+            authentication {
+                basic(BasicAuthentication)
+            }
+        }
+    }
+    assemble.dependsOn fullJar
+    publications {
+        maven(MavenPublication) {
+            groupId = group
+            artifactId = id
+
+            artifact source: fullJar, classifier: '', extension: 'jar'
+        }
+    }
+}
