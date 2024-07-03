@@ -46,7 +46,7 @@ public class AccessTransformerReader implements IAccessModifierReader {
                 case "public-f" -> ClassModifier.PUBLIC_MUTABLE;
                 case "private-f" -> ClassModifier.PRIVATE_MUTABLE;
                 case "protected-f" -> ClassModifier.PROTECTED_MUTABLE;
-                default -> throw new RuntimeException("Unsupported access: '" + tokens.getFirst() + "'");
+                default -> throw new RuntimeException("Unsupported access: '" + tokens.get(0) + "'");
             };
             switch (tokens.size()) {
                 case 2:

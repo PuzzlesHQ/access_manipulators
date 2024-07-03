@@ -40,7 +40,7 @@ public class AccessWidenerReader implements IAccessModifierReader {
                 case "accessible" -> ClassModifier.PUBLIC;
                 case "extendable" -> ClassModifier.PRIVATE;
                 case "mutable" -> ClassModifier.MUTABLE;
-                default -> throw new RuntimeException("Unsupported access: '" + tokens.getFirst() + "'");
+                default -> throw new RuntimeException("Unsupported access: '" + tokens.get(0) + "'");
             };
             var type = tokens.get(1);
             switch (type) {

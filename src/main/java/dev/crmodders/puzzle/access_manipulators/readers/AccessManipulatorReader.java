@@ -38,7 +38,7 @@ public class AccessManipulatorReader implements IAccessModifierReader {
                 case "public" -> ClassModifier.PUBLIC;
                 case "private" -> ClassModifier.PRIVATE;
                 case "protected" -> ClassModifier.PROTECTED;
-                default -> throw new RuntimeException("Unsupported access: '" + tokens.getFirst() + "'");
+                default -> throw new RuntimeException("Unsupported access: '" + tokens.get(0) + "'");
             };
             var type = tokens.get(1);
             switch (type) {

@@ -10,8 +10,7 @@ import dev.crmodders.puzzle.access_manipulators.transformers.AccessManipulatorCl
 import dev.crmodders.puzzle.access_manipulators.transformers.ClassModifier;
 import dev.crmodders.puzzle.access_manipulators.util.ClassPathUtil;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +56,17 @@ public class AccessManipulators {
                 throw new RuntimeException(e);
             }
             return;
+        }
+
+        try {
+            File file = new File(path);
+            if (file.exists()) {
+                FileInputStream stream1 = new FileInputStream(file);
+                reader.read(new String(stream1.readAllBytes()));
+                return;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         ClassPathUtil.iterateThroughClasspath(ClassPathUtil.getUrlsOnClasspath(), zipFile -> {

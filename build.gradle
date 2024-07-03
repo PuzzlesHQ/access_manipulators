@@ -25,7 +25,8 @@ dependencies {
     compileOnly("org.ow2.asm:asm-commons:$asmVersion")
 }
 
-tasks.register("fullJar", Jar) {
+
+jar {
     archiveFileName = "AccessManipulators-" + version + ".jar"
 }
 
@@ -43,13 +44,13 @@ publishing {
             }
         }
     }
-    assemble.dependsOn fullJar
+    assemble.dependsOn jar
     publications {
         maven(MavenPublication) {
             groupId = group
             artifactId = id
 
-            artifact source: fullJar, classifier: '', extension: 'jar'
+            artifact source: jar, classifier: '', extension: 'jar'
         }
     }
 }
