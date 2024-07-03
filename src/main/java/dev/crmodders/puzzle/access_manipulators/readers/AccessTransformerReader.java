@@ -32,9 +32,8 @@ public class AccessTransformerReader implements IAccessModifierReader {
             if(ln.isBlank() || ln.isEmpty() || ln.startsWith("#"))
                 continue;
             List<String> tokens = Arrays.asList(Pattern.compile("[ \\t]+").split(ln));
-            ClassModifier modifier;
-            var access = tokens.get(0);
-            modifier = switch (access) {
+
+            ClassModifier modifier = switch (tokens.get(0)) {
                 case "public" -> ClassModifier.PUBLIC;
                 case "private" -> ClassModifier.PRIVATE;
                 case "protected" -> ClassModifier.PROTECTED;
@@ -48,6 +47,7 @@ public class AccessTransformerReader implements IAccessModifierReader {
                 case "protected-f" -> ClassModifier.PROTECTED_MUTABLE;
                 default -> throw new RuntimeException("Unsupported access: '" + tokens.get(0) + "'");
             };
+
             switch (tokens.size()) {
                 case 2:
                     AccessManipulators.affectedClasses.add(tokens.get(1).replaceAll("\\.", "/") + ".class");

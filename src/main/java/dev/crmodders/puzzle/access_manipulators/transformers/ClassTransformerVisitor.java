@@ -28,7 +28,6 @@ public class ClassTransformerVisitor extends ClassVisitor {
         if (pairs != null) {
             FieldModifierPair pair = pairs.get(name);
             if (pairs.containsKey(name)) {
-                System.out.println("Field " + name + " changed on class " + className);
                 int newAccess = pair.modifier.updateFlags(access);
                 return cv.visitField(newAccess, name, desc, signature, value);
             }
@@ -48,7 +47,6 @@ public class ClassTransformerVisitor extends ClassVisitor {
         if (pairs != null) {
             for (MethodModifierPair pair : pairs) {
                 if (Objects.equals(pair.methodName, name) && Objects.equals(pair.methodDesc, descriptor)) {
-                    System.out.println("Method " + name + " changed on class " + className);
                     int newAccess = pair.modifier.updateFlags(access);
                     return cv.visitMethod(newAccess, name, descriptor, signature, exceptions);
                 }

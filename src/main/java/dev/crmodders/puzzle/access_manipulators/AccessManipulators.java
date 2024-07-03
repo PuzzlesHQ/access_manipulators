@@ -82,7 +82,6 @@ public class AccessManipulators {
     public static byte[] transformClass(String name, byte[] bytes) {
         name = name.replaceAll("\\.", "/");
         if (classesToModify.containsKey(name) || fieldsToModify.containsKey(name) || methodsToModify.containsKey(name)) {
-            System.out.println("Manipulated Class " + name);
             AccessManipulatorClassWriter writer = new AccessManipulatorClassWriter(name, bytes);
             return writer.applyManipulations();
         }
