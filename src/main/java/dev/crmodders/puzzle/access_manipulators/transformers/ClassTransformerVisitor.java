@@ -6,6 +6,7 @@ import dev.crmodders.puzzle.access_manipulators.pairs.MethodModifierPair;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,34 @@ public class ClassTransformerVisitor extends ClassVisitor {
         this.className = className;
     }
 
+    @Override
+    public void visitInnerClass(String name, String outerName, String innerName, int access) {
+        ClassModifier f = AccessManipulators.classesToModify.get(className);
+        if (f != null) {
+                int newAccess = f.updateFlags(access);
+             cv.visitInnerClass(name, outerName, innerName, newAccess);
+            return;
+        }
+        cv.visitInnerClass(
+                name,
+                outerName,
+                innerName,
+                access
+        );
+    }
+    @Override
+    public void visitPermittedSubclass(String permittedSubclass) {
+        ClassModifier f = AccessManipulators.classesToModify.get(className);
+        if(!List.of(f.backupFlags).contains(Opcodes.ACC_FINAL)){
+            return;
+        }
+
+//        if (access == AccessWidener.ClassAccess.EXTENDABLE || access == AccessWidener.ClassAccess.ACCESSIBLE_EXTENDABLE) {
+//            return;
+//        }
+
+       cv.visitPermittedSubclass(permittedSubclass);
+    }
     @Override
     public FieldVisitor visitField(
             int access, String name, String desc, String signature, Object value) {
