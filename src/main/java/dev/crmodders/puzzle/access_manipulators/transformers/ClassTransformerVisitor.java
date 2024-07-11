@@ -24,6 +24,8 @@ public class ClassTransformerVisitor extends ClassVisitor {
     @Override
     public void visitInnerClass(String name, String outerName, String innerName, int access) {
         ClassModifier f = AccessManipulators.classesToModify.get(className);
+
+        System.out.println("innerClass: " + name + " " + className);
         if (f != null) {
                 int newAccess = f.updateFlags(access);
              cv.visitInnerClass(name, outerName, innerName, newAccess);
@@ -39,6 +41,7 @@ public class ClassTransformerVisitor extends ClassVisitor {
     @Override
     public void visitPermittedSubclass(String permittedSubclass) {
         ClassModifier f = AccessManipulators.classesToModify.get(className);
+
         if(!List.of(f.backupFlags).contains(Opcodes.ACC_FINAL)){
             return;
         }
@@ -53,6 +56,7 @@ public class ClassTransformerVisitor extends ClassVisitor {
     public FieldVisitor visitField(
             int access, String name, String desc, String signature, Object value) {
 
+        System.out.println("field: " + name + " " + className);
         Map<String, FieldModifierPair> pairs = AccessManipulators.fieldsToModify.get(className);
         if (pairs != null) {
             FieldModifierPair pair = pairs.get(name);
@@ -72,6 +76,7 @@ public class ClassTransformerVisitor extends ClassVisitor {
             final String signature,
             final String[] exceptions) {
 
+        System.out.println("method: " + name + " " + className);
         List<MethodModifierPair> pairs = AccessManipulators.methodsToModify.get(className);
         if (pairs != null) {
             for (MethodModifierPair pair : pairs) {
