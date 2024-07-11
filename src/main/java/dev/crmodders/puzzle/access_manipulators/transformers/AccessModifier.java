@@ -2,7 +2,7 @@ package dev.crmodders.puzzle.access_manipulators.transformers;
 
 import org.objectweb.asm.Opcodes;
 
-public enum ClassModifier {
+public enum AccessModifier {
 
     // Regular Modifiers
     PUBLIC(Opcodes.ACC_PUBLIC, new int[]{ Opcodes.ACC_PRIVATE, Opcodes.ACC_PROTECTED }),
@@ -25,26 +25,26 @@ public enum ClassModifier {
     boolean interfaceCheck;
     final int[] backupFlags;
 
-    ClassModifier(int[] newFlags, int[] incompatibleFlags) {
+    AccessModifier(int[] newFlags, int[] incompatibleFlags) {
         this.newFlags = newFlags;
         this.incompatibleFlags = incompatibleFlags;
         this.backupFlags = new int[0];
     }
 
-    ClassModifier(int newFlag, int[] incompatibleFlags) {
+    AccessModifier(int newFlag, int[] incompatibleFlags) {
         this.newFlags = new int[]{newFlag};
         this.incompatibleFlags = incompatibleFlags;
         this.backupFlags = new int[0];
     }
 
-    ClassModifier(int[] newFlags, int[] incompatibleFlags, boolean interfaceCheck, int[] backupFlags) {
+    AccessModifier(int[] newFlags, int[] incompatibleFlags, boolean interfaceCheck, int[] backupFlags) {
         this.newFlags = newFlags;
         this.incompatibleFlags = incompatibleFlags;
         this.interfaceCheck = interfaceCheck;
         this.backupFlags = backupFlags;
     }
 
-    ClassModifier(int newFlag, int[] incompatibleFlags, boolean interfaceCheck, int[] backupFlags) {
+    AccessModifier(int newFlag, int[] incompatibleFlags, boolean interfaceCheck, int[] backupFlags) {
         this.newFlags = new int[]{newFlag};
         this.incompatibleFlags = incompatibleFlags;
         this.interfaceCheck = interfaceCheck;

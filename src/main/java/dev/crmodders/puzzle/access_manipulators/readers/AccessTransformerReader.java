@@ -4,7 +4,7 @@ import dev.crmodders.puzzle.access_manipulators.pairs.FieldModifierPair;
 import dev.crmodders.puzzle.access_manipulators.pairs.MethodModifierPair;
 import dev.crmodders.puzzle.access_manipulators.readers.api.IAccessModifierReader;
 import dev.crmodders.puzzle.access_manipulators.AccessManipulators;
-import dev.crmodders.puzzle.access_manipulators.transformers.ClassModifier;
+import dev.crmodders.puzzle.access_manipulators.transformers.AccessModifier;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,39 +33,30 @@ public class AccessTransformerReader implements IAccessModifierReader {
                 continue;
             List<String> tokens = Arrays.asList(Pattern.compile("[ \\t]+").split(ln));
 
-            ClassModifier modifier = switch (tokens.get(0)) {
-                case "public" -> ClassModifier.PUBLIC;
-                case "private" -> ClassModifier.PRIVATE;
-                case "protected" -> ClassModifier.PROTECTED;
+            AccessModifier modifier = switch (tokens.get(0)) {
+                case "public" -> AccessModifier.PUBLIC;
+                case "private" -> AccessModifier.PRIVATE;
+                case "protected" -> AccessModifier.PROTECTED;
 
-                case "public+f" -> ClassModifier.PUBLIC_IMMUTABLE;
-                case "private+f" -> ClassModifier.PRIVATE_IMMUTABLE;
-                case "protected+f" -> ClassModifier.PROTECTED_IMMUTABLE;
+                case "public+f" -> AccessModifier.PUBLIC_IMMUTABLE;
+                case "private+f" -> AccessModifier.PRIVATE_IMMUTABLE;
+                case "protected+f" -> AccessModifier.PROTECTED_IMMUTABLE;
 
-                case "public-f" -> ClassModifier.PUBLIC_MUTABLE;
-                case "private-f" -> ClassModifier.PRIVATE_MUTABLE;
-                case "protected-f" -> ClassModifier.PROTECTED_MUTABLE;
+                case "public-f" -> AccessModifier.PUBLIC_MUTABLE;
+                case "private-f" -> AccessModifier.PRIVATE_MUTABLE;
+                case "protected-f" -> AccessModifier.PROTECTED_MUTABLE;
                 default -> throw new RuntimeException("Unsupported access: '" + tokens.get(0) + "'");
             };
 
             switch (tokens.size()) {
                 case 2:
-                    AccessManipulators.affectedClasses.add(tokens.get(1).replaceAll("\\.", "/") + ".class");
-                    AccessManipulators.classesToModify.put(tokens.get(1).replaceAll("\\.", "/"),modifier);
+                    IAccessModifierReader.registerClassModifier(tokens.get(1).replaceAll("\\.", "/"), modifier);
                     break;
                 case 3:
-                    HashMap<String, FieldModifierPair> hm = new HashMap<>();
-                    hm.put(tokens.get(2),new FieldModifierPair(tokens.get(2), tokens.get(1).replaceAll("\\.", "/"), modifier));
-
-                    AccessManipulators.affectedClasses.add(tokens.get(1).replaceAll("\\.", "/") + ".class");
-                    AccessManipulators.fieldsToModify.put(tokens.get(1).replaceAll("\\.", "/"), hm);
+                    IAccessModifierReader.registerFieldModifier(new FieldModifierPair(tokens.get(2), tokens.get(1).replaceAll("\\.", "/"), modifier));
                     break;
                 case 4:
-                    List<MethodModifierPair> p = new ArrayList<>(1);
-                    p.add(new MethodModifierPair(tokens.get(2),tokens.get(3),tokens.get(1).replaceAll("\\.", "/"), modifier));
-
-                    AccessManipulators.affectedClasses.add(tokens.get(1).replaceAll("\\.", "/") + ".class");
-                    AccessManipulators.methodsToModify.put(tokens.get(1).replaceAll("\\.", "/"),p);
+                    IAccessModifierReader.registerMethodModifier(new MethodModifierPair(tokens.get(2),tokens.get(3),tokens.get(1).replaceAll("\\.", "/"), modifier));
                     break;
                 default:
                     throw new RuntimeException("Unsupported type: '" + tokens.get(1) + "'");

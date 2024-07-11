@@ -7,21 +7,18 @@ import dev.crmodders.puzzle.access_manipulators.readers.AccessTransformerReader;
 import dev.crmodders.puzzle.access_manipulators.readers.AccessWidenerReader;
 import dev.crmodders.puzzle.access_manipulators.readers.api.IAccessModifierReader;
 import dev.crmodders.puzzle.access_manipulators.transformers.AccessManipulatorClassWriter;
-import dev.crmodders.puzzle.access_manipulators.transformers.ClassModifier;
+import dev.crmodders.puzzle.access_manipulators.transformers.AccessModifier;
 import dev.crmodders.puzzle.access_manipulators.util.ClassPathUtil;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class AccessManipulators {
 
-    public static List<String> affectedClasses = new ArrayList<>();
+    public static Set<String> affectedClasses = new HashSet<>();
 
-    public static Map<String, ClassModifier> classesToModify = new HashMap<>();
+    public static Map<String, AccessModifier> classesToModify = new HashMap<>();
     public static Map<String, Map<String, FieldModifierPair>> fieldsToModify = new HashMap<>();
     public static Map<String, List<MethodModifierPair>> methodsToModify = new HashMap<>();
 

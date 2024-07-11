@@ -4,7 +4,7 @@ import dev.crmodders.puzzle.access_manipulators.pairs.FieldModifierPair;
 import dev.crmodders.puzzle.access_manipulators.pairs.MethodModifierPair;
 import dev.crmodders.puzzle.access_manipulators.readers.api.IAccessModifierReader;
 import dev.crmodders.puzzle.access_manipulators.AccessManipulators;
-import dev.crmodders.puzzle.access_manipulators.transformers.ClassModifier;
+import dev.crmodders.puzzle.access_manipulators.transformers.AccessModifier;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,42 +34,33 @@ public class AccessWidenerReader implements IAccessModifierReader {
             if(ln.isBlank() || ln.isEmpty() || ln.startsWith("#"))
                 continue;
             List<String> tokens = Arrays.asList(Pattern.compile("[ \\t]+").split(ln));
-            ClassModifier modifier;
+            AccessModifier modifier;
             var access = tokens.get(0);
             modifier = switch (access) {
-                case "accessible" -> ClassModifier.PUBLIC;
-                case "extendable" -> ClassModifier.PRIVATE;
-                case "mutable" -> ClassModifier.MUTABLE;
+                case "accessible" -> AccessModifier.PUBLIC;
+                case "extendable" -> AccessModifier.PRIVATE;
+                case "mutable" -> AccessModifier.MUTABLE;
                 default -> throw new RuntimeException("Unsupported access: '" + tokens.get(0) + "'");
             };
             var type = tokens.get(1);
             switch (type) {
                 case "class":
                     if (tokens.size()==3) {
-                        AccessManipulators.affectedClasses.add(tokens.get(2) + ".class");
-                        AccessManipulators.classesToModify.put(tokens.get(2), modifier);
+                        IAccessModifierReader.registerClassModifier(tokens.get(2), modifier);
                     }
                     else
                         throw new RuntimeException("Layout is invalid for class AW");
                     break;
                 case "field":
                     if (tokens.size()==5) {
-                        HashMap<String, FieldModifierPair> hm = new HashMap<>();
-                        hm.put(tokens.get(3),new FieldModifierPair(tokens.get(3), tokens.get(2), modifier));
-
-                        AccessManipulators.affectedClasses.add(tokens.get(2) + ".class");
-                        AccessManipulators.fieldsToModify.put(tokens.get(2), hm);
+                        IAccessModifierReader.registerFieldModifier(new FieldModifierPair(tokens.get(3), tokens.get(2), modifier));
                     }
                     else
                         throw new RuntimeException("Layout is invalid for field AW");
                     break;
                 case "method":
                     if(tokens.size()==5){
-                        List<MethodModifierPair> p = new ArrayList<>(1);
-                        p.add(new MethodModifierPair(tokens.get(3),tokens.get(4),tokens.get(2), modifier));
-
-                        AccessManipulators.affectedClasses.add(tokens.get(2) + ".class");
-                        AccessManipulators.methodsToModify.put(tokens.get(2), p);
+                        IAccessModifierReader.registerMethodModifier(new MethodModifierPair(tokens.get(3),tokens.get(4),tokens.get(2), modifier));
                     }else {
                         throw new RuntimeException("Layout is invalid for method AW");
                     }
