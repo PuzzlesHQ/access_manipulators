@@ -42,7 +42,7 @@ public interface IAccessModifierReader {
         Map<String, FieldModifierPair> fieldModifierPairs = AccessManipulators.fieldsToModify.get(fieldModifierPair.className);
         if (fieldModifierPairs == null) fieldModifierPairs = new HashMap<>();
 
-        fieldModifierPairs.put(fieldModifierPair.className, fieldModifierPair);
+        fieldModifierPairs.put(fieldModifierPair.fieldName, fieldModifierPair);
         AccessManipulators.fieldsToModify.put(fieldModifierPair.className, fieldModifierPairs);
 
         AccessManipulators.affectedClasses.add(fieldModifierPair.className.replaceAll("\\.", "/") + ".class");
