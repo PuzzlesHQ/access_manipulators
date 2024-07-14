@@ -58,7 +58,7 @@ public class ClassTransformerVisitor extends ClassVisitor {
         Map<String, FieldModifierPair> pairs = AccessManipulators.fieldsToModify.get(className);
         if (pairs != null) {
             FieldModifierPair pair = pairs.get(name);
-            if (pairs.containsKey(name)) {
+            if (pair != null) {
                 int newAccess = pair.modifier.updateFlags(access);
                 return cv.visitField(newAccess, name, desc, signature, value);
             }
@@ -77,7 +77,6 @@ public class ClassTransformerVisitor extends ClassVisitor {
         List<MethodModifierPair> pairs = AccessManipulators.methodsToModify.get(className);
         if (pairs != null) {
             for (MethodModifierPair pair : pairs) {
-                System.out.println(pair + " - " + pair.methodName + " " + pair.methodDesc);
                 if (Objects.equals(pair.methodName, name) && Objects.equals(pair.methodDesc, descriptor)) {
                     int newAccess = pair.modifier.updateFlags(access);
                     return cv.visitMethod(newAccess, name, descriptor, signature, exceptions);

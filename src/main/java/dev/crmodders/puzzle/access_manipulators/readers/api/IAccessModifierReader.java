@@ -15,8 +15,9 @@ public interface IAccessModifierReader {
     void read(String contents);
 
     static void registerClassModifier(String className, AccessModifier accessModifier) {
-        AccessManipulators.affectedClasses.add(className);
         AccessManipulators.classesToModify.put(className, accessModifier);
+
+        AccessManipulators.affectedClasses.add(className.replaceAll("\\.", "/") + ".class");
     }
 
     static void registerMethodModifier(String className, AccessModifier accessModifier, String methodName, String methodDesc) {
@@ -24,14 +25,14 @@ public interface IAccessModifierReader {
     }
 
     static void registerMethodModifier(MethodModifierPair methodModifierPair) {
-        if (AccessManipulators.methodsToModify.get(methodModifierPair.className) != null)
-            AccessManipulators.methodsToModify.put(methodModifierPair.className, new ArrayList<>());
-
         List<MethodModifierPair> methodModifierPairs = AccessManipulators.methodsToModify.get(methodModifierPair.className);
+        if (methodModifierPairs == null) methodModifierPairs = new ArrayList<>();
+
         methodModifierPairs.add(methodModifierPair);
         AccessManipulators.methodsToModify.put(methodModifierPair.className, methodModifierPairs);
 
-        AccessManipulators.affectedClasses.add(methodModifierPair.className);
+        System.out.println(methodModifierPair.className.replaceAll("\\.", "/") + ".class");
+        AccessManipulators.affectedClasses.add(methodModifierPair.className.replaceAll("\\.", "/") + ".class");
     }
 
     static void registerFieldModifier(String className, AccessModifier accessModifier, String fieldName) {
@@ -39,14 +40,14 @@ public interface IAccessModifierReader {
     }
 
     static void registerFieldModifier(FieldModifierPair fieldModifierPair) {
-        if (AccessManipulators.fieldsToModify.get(fieldModifierPair.className) != null)
-            AccessManipulators.fieldsToModify.put(fieldModifierPair.className, new HashMap<>());
-
         Map<String, FieldModifierPair> fieldModifierPairs = AccessManipulators.fieldsToModify.get(fieldModifierPair.className);
+        if (fieldModifierPairs == null) fieldModifierPairs = new HashMap<>();
+
         fieldModifierPairs.put(fieldModifierPair.className, fieldModifierPair);
         AccessManipulators.fieldsToModify.put(fieldModifierPair.className, fieldModifierPairs);
 
-        AccessManipulators.affectedClasses.add(fieldModifierPair.className);
+        System.out.println(fieldModifierPair.className.replaceAll("\\.", "/") + ".class");
+        AccessManipulators.affectedClasses.add(fieldModifierPair.className.replaceAll("\\.", "/") + ".class");
     }
 
 }

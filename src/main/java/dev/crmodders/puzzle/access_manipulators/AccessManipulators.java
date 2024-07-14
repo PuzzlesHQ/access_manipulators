@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class AccessManipulators {
 
-    public static Set<String> affectedClasses = new HashSet<>();
+    public static List<String> affectedClasses = new ArrayList<>();
 
     public static Map<String, AccessModifier> classesToModify = new HashMap<>();
     public static Map<String, Map<String, FieldModifierPair>> fieldsToModify = new HashMap<>();
