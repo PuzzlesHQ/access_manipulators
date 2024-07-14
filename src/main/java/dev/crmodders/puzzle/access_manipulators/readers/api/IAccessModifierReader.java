@@ -31,7 +31,6 @@ public interface IAccessModifierReader {
         methodModifierPairs.add(methodModifierPair);
         AccessManipulators.methodsToModify.put(methodModifierPair.className, methodModifierPairs);
 
-        System.out.println(methodModifierPair.className.replaceAll("\\.", "/") + ".class");
         AccessManipulators.affectedClasses.add(methodModifierPair.className.replaceAll("\\.", "/") + ".class");
     }
 
@@ -46,7 +45,6 @@ public interface IAccessModifierReader {
         fieldModifierPairs.put(fieldModifierPair.className, fieldModifierPair);
         AccessManipulators.fieldsToModify.put(fieldModifierPair.className, fieldModifierPairs);
 
-        System.out.println(fieldModifierPair.className.replaceAll("\\.", "/") + ".class");
         AccessManipulators.affectedClasses.add(fieldModifierPair.className.replaceAll("\\.", "/") + ".class");
     }
 
