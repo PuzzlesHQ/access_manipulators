@@ -1,17 +1,14 @@
-package dev.crmodders.puzzle.access_manipulators.readers;
+package io.github.puzzle.access_manipulators.readers;
 
-import dev.crmodders.puzzle.access_manipulators.pairs.FieldModifierPair;
-import dev.crmodders.puzzle.access_manipulators.pairs.MethodModifierPair;
-import dev.crmodders.puzzle.access_manipulators.readers.api.IAccessModifierReader;
-import dev.crmodders.puzzle.access_manipulators.AccessManipulators;
-import dev.crmodders.puzzle.access_manipulators.transformers.AccessModifier;
+import io.github.puzzle.access_manipulators.pairs.FieldModifierPair;
+import io.github.puzzle.access_manipulators.pairs.MethodModifierPair;
+import io.github.puzzle.access_manipulators.readers.api.IAccessModifierReader;
+import io.github.puzzle.access_manipulators.transformers.AccessModifier;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 

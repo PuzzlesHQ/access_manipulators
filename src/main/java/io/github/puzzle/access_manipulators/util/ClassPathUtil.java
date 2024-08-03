@@ -1,4 +1,4 @@
-package dev.crmodders.puzzle.access_manipulators.util;
+package io.github.puzzle.access_manipulators.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +7,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public interface ClassPathUtil {

@@ -1,8 +1,8 @@
-package dev.crmodders.puzzle.access_manipulators.transformers;
+package io.github.puzzle.access_manipulators.transformers;
 
-import dev.crmodders.puzzle.access_manipulators.AccessManipulators;
-import dev.crmodders.puzzle.access_manipulators.pairs.FieldModifierPair;
-import dev.crmodders.puzzle.access_manipulators.pairs.MethodModifierPair;
+import io.github.puzzle.access_manipulators.AccessManipulators;
+import io.github.puzzle.access_manipulators.pairs.FieldModifierPair;
+import io.github.puzzle.access_manipulators.pairs.MethodModifierPair;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;

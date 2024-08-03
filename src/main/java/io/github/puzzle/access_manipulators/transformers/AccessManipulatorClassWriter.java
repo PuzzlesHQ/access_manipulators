@@ -1,6 +1,6 @@
-package dev.crmodders.puzzle.access_manipulators.transformers;
+package io.github.puzzle.access_manipulators.transformers;
 
-import dev.crmodders.puzzle.access_manipulators.AccessManipulators;
+import io.github.puzzle.access_manipulators.AccessManipulators;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;

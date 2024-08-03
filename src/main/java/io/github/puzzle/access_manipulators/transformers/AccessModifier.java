@@ -1,4 +1,4 @@
-package dev.crmodders.puzzle.access_manipulators.transformers;
+package io.github.puzzle.access_manipulators.transformers;
 
 import org.objectweb.asm.Opcodes;
 
