@@ -4,7 +4,7 @@ plugins {
     id("java-library")
 }
 
-group = "io.github"
+group = "com.github"
 
 repositories {
     mavenCentral()
