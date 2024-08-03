@@ -23,11 +23,6 @@ dependencies {
     compileOnly("org.ow2.asm:asm-commons:$asmVersion")
 }
 
-
-jar {
-    archiveFileName = "AccessManipulators-" + version + ".jar"
-}
-
 publishing {
     publications {
         maven(MavenPublication) {
