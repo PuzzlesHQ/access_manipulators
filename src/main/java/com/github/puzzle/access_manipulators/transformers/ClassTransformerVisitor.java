@@ -1,8 +1,8 @@
-package io.github.puzzle.access_manipulators.transformers;
+package com.github.puzzle.access_manipulators.transformers;
 
-import io.github.puzzle.access_manipulators.AccessManipulators;
-import io.github.puzzle.access_manipulators.pairs.FieldModifierPair;
-import io.github.puzzle.access_manipulators.pairs.MethodModifierPair;
+import com.github.puzzle.access_manipulators.AccessManipulators;
+import com.github.puzzle.access_manipulators.pairs.FieldModifierPair;
+import com.github.puzzle.access_manipulators.pairs.MethodModifierPair;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;

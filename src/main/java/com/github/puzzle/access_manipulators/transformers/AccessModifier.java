@@ -1,4 +1,4 @@
-package io.github.puzzle.access_manipulators.transformers;
+package com.github.puzzle.access_manipulators.transformers;
 
 import org.objectweb.asm.Opcodes;
 

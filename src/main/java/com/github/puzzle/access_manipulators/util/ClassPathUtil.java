@@ -1,4 +1,4 @@
-package io.github.puzzle.access_manipulators.util;
+package com.github.puzzle.access_manipulators.util;
 
 import java.io.File;
 import java.io.IOException;

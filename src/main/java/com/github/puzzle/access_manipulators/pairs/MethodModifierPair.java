@@ -1,6 +1,6 @@
-package io.github.puzzle.access_manipulators.pairs;
+package com.github.puzzle.access_manipulators.pairs;
 
-import io.github.puzzle.access_manipulators.transformers.AccessModifier;
+import com.github.puzzle.access_manipulators.transformers.AccessModifier;
 
 public class MethodModifierPair {
 

@@ -1,14 +1,14 @@
-package io.github.puzzle.access_manipulators;
+package com.github.puzzle.access_manipulators;
 
-import io.github.puzzle.access_manipulators.pairs.FieldModifierPair;
-import io.github.puzzle.access_manipulators.pairs.MethodModifierPair;
-import io.github.puzzle.access_manipulators.readers.AccessManipulatorReader;
-import io.github.puzzle.access_manipulators.readers.AccessTransformerReader;
-import io.github.puzzle.access_manipulators.readers.AccessWidenerReader;
-import io.github.puzzle.access_manipulators.readers.api.IAccessModifierReader;
-import io.github.puzzle.access_manipulators.transformers.AccessManipulatorClassWriter;
-import io.github.puzzle.access_manipulators.transformers.AccessModifier;
-import io.github.puzzle.access_manipulators.util.ClassPathUtil;
+import com.github.puzzle.access_manipulators.pairs.FieldModifierPair;
+import com.github.puzzle.access_manipulators.pairs.MethodModifierPair;
+import com.github.puzzle.access_manipulators.readers.AccessManipulatorReader;
+import com.github.puzzle.access_manipulators.readers.AccessTransformerReader;
+import com.github.puzzle.access_manipulators.readers.AccessWidenerReader;
+import com.github.puzzle.access_manipulators.readers.api.IAccessModifierReader;
+import com.github.puzzle.access_manipulators.transformers.AccessManipulatorClassWriter;
+import com.github.puzzle.access_manipulators.transformers.AccessModifier;
+import com.github.puzzle.access_manipulators.util.ClassPathUtil;
 
 import java.io.*;
 import java.util.*;

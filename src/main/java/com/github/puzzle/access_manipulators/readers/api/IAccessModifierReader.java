@@ -1,9 +1,9 @@
-package io.github.puzzle.access_manipulators.readers.api;
+package com.github.puzzle.access_manipulators.readers.api;
 
-import io.github.puzzle.access_manipulators.AccessManipulators;
-import io.github.puzzle.access_manipulators.pairs.FieldModifierPair;
-import io.github.puzzle.access_manipulators.pairs.MethodModifierPair;
-import io.github.puzzle.access_manipulators.transformers.AccessModifier;
+import com.github.puzzle.access_manipulators.AccessManipulators;
+import com.github.puzzle.access_manipulators.pairs.FieldModifierPair;
+import com.github.puzzle.access_manipulators.pairs.MethodModifierPair;
+import com.github.puzzle.access_manipulators.transformers.AccessModifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
