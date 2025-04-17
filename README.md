@@ -1,4 +1,4 @@
-# ARCHIVED, USE SUCCESSOR REPO [access-manipulators](https://github.com/PuzzlesHQ/access-manipulators)
+# ARCHIVED, USE SUCCESSOR REPO [access-writer](https://github.com/PuzzlesHQ/access-writer)
 
 ## AccessManipulators
 Better than AccessWideners &amp; AccessTransformers but keeps support for them.
